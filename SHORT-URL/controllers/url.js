@@ -13,10 +13,9 @@ async function handleGenerateShortUrl(req, res) {
         visitHistory: [],
         createdBy: req.user._id,
     })
-
     // let urls = await URL.find({_id : req.user._id})
-    return res.render("home", {id: shortId,});
-
+    // return res.render("home", {urls});
+    return res.redirect('/');
 }
 
 async function handleAnalytics(req, res) {

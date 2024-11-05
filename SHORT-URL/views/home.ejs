@@ -6,65 +6,142 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Page</title>
     <style>
+        body {
+            display: flex;
+            justify-content: center;
+            /* align-items: center; */
+            flex-direction: column;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #d4e9ff;
+        }
+
+        .container {
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+            text-align: center;
+            flex-direction: column;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px 30px;
+            margin: 53px;
+            min-height: 70vh;
+        }
+
+        .container h1 {
+            color: #007bff;
+        }
+
+        .form-wraper form {
+            display: flex;
+            flex-direction: column;
+            width: 800px;
+            gap: 3px;
+        }
+
+        label {
+            font-size: 1rem;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        form input {
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            outline: none;
+            margin-bottom: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        form button {
+            padding: 10px;
+            font-size: 1rem;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
         table {
-            border-collapse: collapse;
             width: 100%;
-            border: 1px solid black;
-            margin: 20px 0px;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+        thead {
+            background-color: #007bff;
+            color: #ffffff;
         }
 
         th,
         td {
-            border: 1px solid rgb(115, 113, 113);
-            padding: 15px;
+            padding: 10px;
             text-align: left;
-        }
-
-        th {
-            background-color: #f2f2f2;
+            border-bottom: 1px solid #ddd;
         }
     </style>
 </head>
 
 <body>
-    <h1>Url Shortner</h1>
     <div>
+        <%- include('./templates/navbar.ejs') %>
+    </div>
+    <div class="container">
+        <h1>Url Shortner</h1>
+
         <% if (locals.id) { %>
             <p>URL Generated : http://localhost:3000/<%= id %>
             </p>
             <% } %>
-
-                <form method="post" action="/url">
-                    <label>Enter orignal URL</label>
-                    <input type="text" name="url" placeholder="http://example.com" />
-                    <button type="submit">Generate</button>
-                </form>
-
-
-                <% if (locals.urls) { %>
-
-                    <table cellspacing="0" cellpadding="10">
-                        <thead>
-                            <tr>
-                                <th>Sr no.</th>
-                                <th>Short ID</th>
-                                <th>redirectURL</th>
-                                <th>Clicks</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% urls.forEach((url,index)=> { %>
-                                <tr>
-                                    <td><%= index+1 %></td>
-                                    <td><%= url.shortId %></td>
-                                    <td><%= url.redirectUrl %></td>
-                                    <td><%= url.visitHistory.length %></td>
-                                </tr>
-                                <% }) %>
-
-                        </tbody>
-                    </table>
+                <div class="form-wraper">
+                    <form method="post" action="/url">
+                        <label>Enter orignal URL</label>
+                        <input type="text" name="url" placeholder="http://example.com" />
+                        <button type="submit">Generate</button>
+                    </form>
+                </div>
+                <% if (locals.error) { %>
+                    <h1>Please Enter Url</h1>
                     <% } %>
+
+                        <% if (locals.urls) { %>
+
+                            <table cellspacing="0" cellpadding="10">
+                                <thead>
+                                    <tr>
+                                        <th>Sr no.</th>
+                                        <th>Short URL</th>
+                                        <th>redirectURL</th>
+                                        <th>Clicks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% urls.forEach((url,index)=> { %>
+                                        <tr>
+                                            <td>
+                                                <%= index+1 %>
+                                            </td>
+                                            <td>
+                                                http://localhost:3000/<%= url.shortId %>
+                                            </td>
+                                            <td>
+                                                <%= url.redirectUrl %>
+                                            </td>
+                                            <td>
+                                                <%= url.visitHistory.length %>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+
+                                </tbody>
+                            </table>
+                            <% } %>
+
     </div>
 </body>
 

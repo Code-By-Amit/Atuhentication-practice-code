@@ -45,8 +45,6 @@ app.get('/:shortId', async (req, res) => {
     res.redirect(entry.redirectUrl)
 })
 
-
-
 app.listen(3000, () => {
-    console.log(`Server Started at http://localhost:8000`);
-})
+    console.log(`Server Started at http://localhost:3000`);
+}) 
